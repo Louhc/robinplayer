@@ -1,12 +1,13 @@
 <RCC>
     <qresource prefix="/button">
-        <file>backward.png</file>
-        <file>forward.png</file>
-        <file>pause.png</file>
-        <file>play.png</file>
-        <file>replay.png</file>
+        <file>img/button/backward.png</file>
+        <file>img/button/forward.png</file>
+        <file>img/button/pause.png</file>
+        <file>img/button/play.png</file>
+        <file>img/button/replay.png</file>
     </qresource>
     <qresource prefix="/others">
-        <file>R-C.jfif</file>
+        <file>img/others/R-C.jfif</file>
+        <file>img/others/robin.mp3</file>
     </qresource>
 </RCC>

@@ -5,6 +5,7 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include <QIcon>
+#include "musicplayer.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,15 +22,10 @@ public:
     ~Widget();
 
 private slots:
-    void on_playButton_clicked();
-
     void on_replayButton_clicked();
 
 private:
     Ui::Widget *ui;
-    QMediaPlayer *player;
-    QAudioOutput *audioOutput;
-
-    QIcon playIcon, pauseIcon, replayIcon;
+    MusicPlayer *musicPlayer;
 };
 #endif // WIDGET_H

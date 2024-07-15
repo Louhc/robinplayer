@@ -11,9 +11,11 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    musicplayer.cpp \
     widget.cpp
 
 HEADERS += \
+    musicplayer.h \
     widget.h
 
 FORMS += \
