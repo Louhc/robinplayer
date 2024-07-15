@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/button">
+        <file>backward.png</file>
+        <file>forward.png</file>
+        <file>pause.png</file>
+        <file>play.png</file>
+        <file>replay.png</file>
+    </qresource>
+    <qresource prefix="/others">
+        <file>R-C.jfif</file>
+    </qresource>
+</RCC>
