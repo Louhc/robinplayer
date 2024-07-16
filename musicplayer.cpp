@@ -42,6 +42,7 @@ void MusicPlayer::setProgressBar( QSlider *pb ){
 
     connect(progressBar, &QSlider::sliderPressed, this, &MusicPlayer::onSliderPressed);
     connect(progressBar, &QSlider::sliderReleased, this, &MusicPlayer::onSliderReleased);
+    connect(progressBar, &QSlider::valueChanged, this, &MusicPlayer::onSliderValueChanged);
 }
 
 void MusicPlayer::play(){
@@ -79,18 +80,29 @@ void MusicPlayer::onMediaStatusChanged( QMediaPlayer::MediaStatus status ){
 }
 
 void MusicPlayer::updateProgressBar( qint64 position ){
-    if ( progressBar != nullptr ){
-        progressBar->setValue(position / 1000);
+    if ( progressBar != nullptr && !sliderPressed ){
+        if ( position / 1000 != progressBar->value() ){
+            sliderUpdated = true;
+            progressBar->setValue(position / 1000);
+        }
     }
 }
 
 void MusicPlayer::onSliderPressed(){
-    player->pause();
+    sliderPressed = true;
 }
 
 void MusicPlayer::onSliderReleased(){
+    sliderPressed = false;
+    sliderUpdated = false;
     player->setPosition(progressBar->value() * 1000);
-    player->play();
+}
+
+void MusicPlayer::onSliderValueChanged( int x ){
+    if ( !sliderPressed ){
+        if ( sliderUpdated ) sliderUpdated = false;
+        else player->setPosition(x * 1000);
+    }
 }
 
 void MusicPlayer::onPlayerButtonClicked(){

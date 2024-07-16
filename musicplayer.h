@@ -28,6 +28,7 @@ private slots:
     void updateProgressBar( qint64 position );
     void onSliderPressed();
     void onSliderReleased();
+    void onSliderValueChanged( int x );
 
     void onPlayerButtonClicked();
 
@@ -38,6 +39,8 @@ private:
     QPushButton *playButton;
     QIcon playIcon, pauseIcon;
     qint64 volume;
+    bool sliderPressed;
+    bool sliderUpdated;
 };
 
 #endif // MUSICPLAYER_H
