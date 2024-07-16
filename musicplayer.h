@@ -12,10 +12,13 @@ class MusicPlayer : public QWidget {
     Q_OBJECT
 
 public:
-    MusicPlayer( QWidget *parent = nullptr );
+    explicit MusicPlayer( QWidget *parent = nullptr );
     ~MusicPlayer();
     void setPlayButton( QPushButton *pb );
     void setProgressBar( QSlider *pb );
+    void setVolumeBar( QSlider *vb );
+    void setMuteButton( QPushButton *mb );
+    void setReplayButton( QPushButton *rb );
     
     void play();
     void pause();
@@ -26,21 +29,28 @@ public:
 private slots:
     void onMediaStatusChanged( QMediaPlayer::MediaStatus status );
     void updateProgressBar( qint64 position );
-    void onSliderPressed();
-    void onSliderReleased();
-    void onSliderValueChanged( int x );
+    void onProgressBarPressed();
+    void onProgressBarReleased();
+    void onProgressBarValueChanged( int x );
 
-    void onPlayerButtonClicked();
+    void onVolumeBarPressed();
+    void onVolumeBarReleased();
+    void onVolumeBarValueChanged( int x );
+    void updateVolumeBar( float volume );
+
+    void onPlayButtonClicked();
+    void onMuteButtonClicked();
+    void onReplayButtonClicked();
 
 private:
     QMediaPlayer *player;
     QAudioOutput *audioOutput;
-    QSlider *progressBar;
-    QPushButton *playButton;
+    QSlider *progressBar, *volumeBar;
+    QPushButton *playButton, *muteButton, *replayButton;
     QIcon playIcon, pauseIcon;
     qint64 volume;
-    bool sliderPressed;
-    bool sliderUpdated;
+    bool isProgressBarPressed;
+    bool isProgressBarUpdated;
 };
 
 #endif // MUSICPLAYER_H

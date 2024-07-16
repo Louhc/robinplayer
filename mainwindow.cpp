@@ -5,12 +5,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-
-    //  for buttons
-    ui->replayButton->setIcon(QIcon(":/button/img/button/replay.png"));
-    ui->replayButton->setIconSize(QSize(48, 48));
-    ui->replayButton->setStyleSheet("QPushButton { border: none; background: none; }");
+    ui->setupUi(this);    
 
     // for the cover
     QPixmap pixmap(":/others/img/others/R-C.jfif");
@@ -20,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     musicPlayer = new MusicPlayer;
     musicPlayer->setPlayButton(ui->playButton);
     musicPlayer->setProgressBar(ui->progressBar);
+    musicPlayer->setVolumeBar(ui->volumeBar);
+    musicPlayer->setMuteButton(ui->muteButton);
 
     musicPlayer->setSource(QUrl::fromLocalFile("D:/Github/robinplayer/img/others/robin.mp3"));
 }
@@ -27,10 +24,5 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::onReplayButtonClicked()
-{
-    musicPlayer->replay();
 }
 

@@ -13,6 +13,22 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
+  <widget class="QPushButton" name="playButton">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>370</y>
+     <width>49</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="whatsThis">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;file:///D:/Github/robinplayer/icons/continue.png&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
   <widget class="QLabel" name="infoLabel">
    <property name="geometry">
     <rect>
@@ -58,40 +74,24 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>350</y>
-     <width>151</width>
-     <height>61</height>
+     <x>620</x>
+     <y>400</y>
+     <width>142</width>
+     <height>30</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
-     <widget class="QPushButton" name="playButton">
-      <property name="whatsThis">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;file:///D:/Github/robinplayer/icons/continue.png&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
+     <widget class="QPushButton" name="muteButton">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
     <item>
-     <spacer name="horizontalSpacer">
+     <widget class="QSlider" name="volumeBar">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QPushButton" name="replayButton">
-      <property name="text">
-       <string/>
       </property>
      </widget>
     </item>

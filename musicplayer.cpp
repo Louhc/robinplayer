@@ -10,10 +10,11 @@ MusicPlayer::MusicPlayer( QWidget *parent )
     playButton = nullptr;
     
     volume = 50;
-    audioOutput->setVolume(50);
+    audioOutput->setVolume(volume / 100.0);
 
     connect(player, &QMediaPlayer::mediaStatusChanged, this, &MusicPlayer::onMediaStatusChanged);
     connect(player, &QMediaPlayer::positionChanged, this, &MusicPlayer::updateProgressBar);
+    connect(audioOutput, &QAudioOutput::volumeChanged, this, &MusicPlayer::updateVolumeBar);
 }
 
 MusicPlayer::~MusicPlayer()
@@ -32,7 +33,7 @@ void MusicPlayer::setPlayButton( QPushButton *pb ){
     playButton->setIcon(player->isPlaying() ? pauseIcon : playIcon);
     playButton->setStyleSheet("QPushButton { border: none; background: none; }");
 
-    connect(playButton, &QPushButton::clicked, this, &MusicPlayer::onPlayerButtonClicked);
+    connect(playButton, &QPushButton::clicked, this, &MusicPlayer::onPlayButtonClicked);
 }
 
 void MusicPlayer::setProgressBar( QSlider *pb ){
@@ -40,9 +41,9 @@ void MusicPlayer::setProgressBar( QSlider *pb ){
     progressBar->setMinimum(0);
     progressBar->setMaximum(0);
 
-    connect(progressBar, &QSlider::sliderPressed, this, &MusicPlayer::onSliderPressed);
-    connect(progressBar, &QSlider::sliderReleased, this, &MusicPlayer::onSliderReleased);
-    connect(progressBar, &QSlider::valueChanged, this, &MusicPlayer::onSliderValueChanged);
+    connect(progressBar, &QSlider::sliderPressed, this, &MusicPlayer::onProgressBarPressed);
+    connect(progressBar, &QSlider::sliderReleased, this, &MusicPlayer::onProgressBarReleased);
+    connect(progressBar, &QSlider::valueChanged, this, &MusicPlayer::onProgressBarValueChanged);
 }
 
 void MusicPlayer::play(){
@@ -61,11 +62,20 @@ void MusicPlayer::replay(){
 
 void MusicPlayer::setVolume( const qint64 &v ){
     volume = v;
-    audioOutput->setVolume(volume);
+    audioOutput->setVolume(volume / 100.0);
 }
 
 void MusicPlayer::setSource( const QUrl &source ){
     player->setSource(source);
+}
+
+void MusicPlayer::setVolumeBar( QSlider *vb ){
+    volumeBar = vb;
+    vb->setMinimum(0);
+    vb->setMaximum(100);
+    vb->setValue(volume);
+
+    connect(volumeBar, &QSlider::valueChanged, this, &MusicPlayer::onVolumeBarValueChanged);
 }
 
 void MusicPlayer::onMediaStatusChanged( QMediaPlayer::MediaStatus status ){
@@ -80,32 +90,32 @@ void MusicPlayer::onMediaStatusChanged( QMediaPlayer::MediaStatus status ){
 }
 
 void MusicPlayer::updateProgressBar( qint64 position ){
-    if ( progressBar != nullptr && !sliderPressed ){
+    if ( progressBar != nullptr && !isProgressBarPressed ){
         if ( position / 1000 != progressBar->value() ){
-            sliderUpdated = true;
+            isProgressBarUpdated = true;
             progressBar->setValue(position / 1000);
         }
     }
 }
 
-void MusicPlayer::onSliderPressed(){
-    sliderPressed = true;
+void MusicPlayer::onProgressBarPressed(){
+    isProgressBarPressed = true;
 }
 
-void MusicPlayer::onSliderReleased(){
-    sliderPressed = false;
-    sliderUpdated = false;
+void MusicPlayer::onProgressBarReleased(){
+    isProgressBarPressed = false;
+    isProgressBarUpdated = false;
     player->setPosition(progressBar->value() * 1000);
 }
 
-void MusicPlayer::onSliderValueChanged( int x ){
-    if ( !sliderPressed ){
-        if ( sliderUpdated ) sliderUpdated = false;
+void MusicPlayer::onProgressBarValueChanged( int x ){
+    if ( !isProgressBarPressed ){
+        if ( isProgressBarUpdated ) isProgressBarUpdated = false;
         else player->setPosition(x * 1000);
     }
 }
 
-void MusicPlayer::onPlayerButtonClicked(){
+void MusicPlayer::onPlayButtonClicked(){
     if ( !player->hasAudio() ) return;
     if ( player->isPlaying() ){
         player->pause();
@@ -114,4 +124,40 @@ void MusicPlayer::onPlayerButtonClicked(){
         player->play();
         playButton->setIcon(pauseIcon);
     }
+}
+
+void MusicPlayer::onVolumeBarValueChanged( int x ){
+    audioOutput->setVolume(x / 100.0);
+}
+
+void MusicPlayer::onVolumeBarPressed(){
+    ;
+}
+
+void MusicPlayer::onVolumeBarReleased(){
+    ;
+}
+
+void MusicPlayer::updateVolumeBar( float volume ){
+    if ( volumeBar != nullptr ){
+        volumeBar->setValue((int)(100 * volume));
+    }
+}
+
+void MusicPlayer::setMuteButton( QPushButton *mb ){
+    muteButton = mb;
+    connect(muteButton, &QPushButton::clicked, this, &MusicPlayer::onMuteButtonClicked);
+}
+
+void MusicPlayer::setReplayButton( QPushButton *rb ){
+    replayButton = rb;
+    connect(replayButton, &QPushButton::clicked, this, &MusicPlayer::onReplayButtonClicked);
+}
+
+void MusicPlayer::onMuteButtonClicked(){
+    setVolume(0);
+}
+
+void MusicPlayer::onReplayButtonClicked(){
+    replay();
 }

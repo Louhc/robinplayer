@@ -22,7 +22,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void onReplayButtonClicked();
 
 private:
     Ui::MainWindow *ui;
