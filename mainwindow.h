@@ -1,5 +1,5 @@
-#ifndef WIDGET_H
-#define WIDGET_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QWidget>
 #include <QMediaPlayer>
@@ -9,23 +9,23 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class Widget;
+class MainWindow;
 }
 QT_END_NAMESPACE
 
-class Widget : public QWidget
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = nullptr);
-    ~Widget();
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
 private slots:
-    void on_replayButton_clicked();
+    void onReplayButtonClicked();
 
 private:
-    Ui::Widget *ui;
+    Ui::MainWindow *ui;
     MusicPlayer *musicPlayer;
 };
-#endif // WIDGET_H
+#endif // MAINWINDOW_H

@@ -11,15 +11,15 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    musicplayer.cpp \
-    widget.cpp
+    mainwindow.cpp \
+    musicplayer.cpp
 
 HEADERS += \
-    musicplayer.h \
-    widget.h
+    mainwindow.h \
+    musicplayer.h
 
 FORMS += \
-    widget.ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

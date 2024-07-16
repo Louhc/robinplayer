@@ -1,9 +1,9 @@
-#include "widget.h"
-#include "ui_widget.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 
-Widget::Widget(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::Widget)
+    , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -24,12 +24,12 @@ Widget::Widget(QWidget *parent)
     musicPlayer->setSource(QUrl::fromLocalFile("D:/Github/robinplayer/img/others/robin.mp3"));
 }
 
-Widget::~Widget()
+MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-void Widget::on_replayButton_clicked()
+void MainWindow::onReplayButtonClicked()
 {
     musicPlayer->replay();
 }
